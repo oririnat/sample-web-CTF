@@ -23,7 +23,6 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
         <!-- style CSS -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <script src="/static/js/jquery-3.4.1.min.js"></script>
       </head>
 
       <body>
@@ -45,10 +44,6 @@
                       <li class="nav-item active">
                         <a class="nav-link" href="index">Home </a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="about">About</a>
-                      </li>
-
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="blog" id="navbarDropdown" role="button"
                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,10 +70,31 @@
                         <a class="nav-link" href="contact">Contact</a>
                       </li>
                     </ul>
+                    <h3 style="width: 180px;">
+                      My money : {{money}}
+                    </h3>
                   </div>
-                </nav>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Page
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="project">Project</a>
+                      <a class="dropdown-item" href="project_details">Project Details</a>
+                      <a class="dropdown-item" href="service">Services</a>
+                      <a class="dropdown-item" href="elements">Elements</a>
+                    </div>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="contact">Contact</a>
+                  </li>
+                  </ul>
               </div>
+              </nav>
             </div>
+          </div>
           </div>
         </header>
         <!-- Header part end-->
@@ -246,6 +262,8 @@
         <!-- footer part end-->
 
         <!-- jquery plugins here-->
+        <!-- jquery library-->
+        <script src="/static/js/jquery-3.4.1.min.js"></script>
         <!-- popper js -->
         <script src="static/js/popper.min.js"></script>
         <!-- bootstrap js -->
@@ -256,10 +274,7 @@
         <!-- ajaxchimp js -->
         <script src="static/js/jquery.ajaxchimp.min.js"></script>
         <!-- validate js -->
-        <script src="static/js/jquery.validate.min.js"></script>
-        <!-- form js -->
-        <script src="static/js/jquery.form.js"></script>
-        <script src="static/js/jquery.magnific-popup.js"></script>
+        <script src="static/js/jquery.validate.js"></script>
         <!-- swiper js -->
         <script src="static/js/swiper.min.js"></script>
         <!-- swiper js -->
@@ -268,11 +283,6 @@
         <script src="static/js/owl.carousel.min.js"></script>
         <!-- swiper js -->
         <script src="static/js/slick.min.js"></script>
-        <!-- custom js -->
-        <script src="static/js/custom.js"></script>
-
-
-
       </body>
 
       </html>

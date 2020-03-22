@@ -1,13 +1,4 @@
 $(document).ready(function () {
-
-    // var subject = window.atob(getUrlVars()["subject"]);
-
-    // if ((subject != null) && (subject != "")) {
-    //     alert("hello!");
-    //     $("#messageSent").html("The message about " + subject + " was successfully transmitted");
-    // }
-
-
     // HTML5 automatically adds the attribute 'novalidate=novalidate'     <- Maybe this is a hint?
     $('#contactForm').removeAttr('novalidate');
 
@@ -34,7 +25,7 @@ $(document).ready(function () {
             }
         },
         submitHandler: function (form) {
-            sendMessage($('#subject').text());
+            sendMessage($('#subject').val());
         }
     })
 
@@ -53,7 +44,6 @@ var getUrlVars = function () {
 
 var sendMessage = function (subject) {
     if ((subject != null) && (subject != "")) {
-        alert("hello!");
         $("#messageSent").html("The message about " + subject + " was successfully transmitted");
     }
 }
