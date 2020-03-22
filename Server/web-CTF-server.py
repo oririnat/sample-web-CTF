@@ -1,10 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+import csv
 
 app = Flask(__name__)
-
-@app.route("/")
-def home():
-	return render_template("index.html")
 
 @app.route("/register_to_system", methods=["POST"])
 def register_to_system():
@@ -17,69 +14,113 @@ def register_to_system():
 
 	return redirect(url_for('login'))
 
+@app.route("/try_login_to_page", methods=["post"])
+def try_login_to_page():
+	session['username'] = request.form["username"]
+	session['pass'] = request.form["pass"]
+	if(isUserLogin(session['username'], session['pass'])):
+		return redirect(url_for('index'))
+	else:
+		return redirect(url_for('login'))
+
+def isUserLogin(form_username, form_password):
+	with open('data/users.csv', 'r') as file:
+		reader = csv.reader(file)
+		for row in reader:
+			if(row[0] == form_username and row[1] == form_password):
+				return True;
+	return False
+
+@app.route("/transfer-money")
+def transfer_money():
+	return "OK"
+
 @app.route("/register")
 def register():
 	return render_template("register.html")
 
 @app.route("/login", methods=["get"])
 def login():
-	# session['username'] = request.args.get('username')
-	# session['password'] = request.args.get('password')clear
+	if(isUserLogin(session['username'], session['pass'])):
+		return redirect(url_for('index'))
+	else:
+		return render_template("login.html")
 
+@app.route("/logout")
+def logout():
+	session.pop('username')
+	session.pop('pass')
 	return render_template("login.html")
 
-
-
-# @app.route("/try_loging", methods=('get', 'post'))
-# def try_to_login():
-# 	# if(){
-# 	#
-# 	# }
-# 	return True
-
+@app.route("/")
+def home():
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("index.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/index")
 def index():
-	return render_template("index.html")
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("index.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/about")
 def about():
-	return render_template("about.html")
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("about.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/blog")
 def blog():
-	return render_template("blog.html")
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("blog.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/single-blog")
 def single_blog():
-	return render_template("single-blog.html")
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("single-blog.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/project")
 def project():
-	return render_template("project.html")
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("project.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/project_details")
 def project_details():
-	return render_template("project_details.html")
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("project_details.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/service")
 def service():
-	return render_template("service.html")
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("service.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/elements")
 def elements():
-	return render_template("elements.html")
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("elements.html")
+	else:
+		return render_template("login.html")
 
 @app.route("/contact")
 def contact():
-	return render_template("contact.html")
-
-
-@app.route("/transfer-money")
-def transfer_money():
-
-	return "OK"
-
+	if(isUserLogin(session['username'], session['pass'])):
+		return render_template("contact.html")
+	else:
+		return render_template("login.html")
 
 if __name__ == "__main__":
 	app.secret_key = 'super secret key'
