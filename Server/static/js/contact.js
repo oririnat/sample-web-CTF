@@ -1,6 +1,5 @@
 $(document).ready(function () {
-    // HTML5 automatically adds the attribute 'novalidate=novalidate'     <- Maybe this is a hint?
-    // $('#contactForm').removeAttr('novalidate');
+    // HINT: Subject is your friend
 
     // validate contactForm form
     $('#contactForm').validate({
