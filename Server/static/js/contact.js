@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // HTML5 automatically adds the attribute 'novalidate=novalidate'     <- Maybe this is a hint?
-    $('#contactForm').removeAttr('novalidate');
+    // $('#contactForm').removeAttr('novalidate');
 
     // validate contactForm form
     $('#contactForm').validate({
@@ -25,9 +25,21 @@ $(document).ready(function () {
             }
         },
         submitHandler: function (form) {
-            sendMessage($('#subject').val());
+            $(form).ajaxSubmit({
+                type: "GET",
+                data: $(form).serialize(),
+                success: function () {
+                    alert("ok");
+                },
+            })
         }
     })
+
+    var subject = getUrlVars()['subject'];
+
+    if (subject != null) {
+        sendMessage(decodeURIComponent(subject));
+    }
 
     $('#submit').click(function () {
         $("#contactForm").valid();

@@ -124,11 +124,10 @@
                 <h2 class="contact-title">Get in Touch</h2>
               </div>
               <div class="col-lg-8">
-                <form class="form-contact contact_form" id="contactForm">
+                <form class="form-contact contact_form" id="contactForm" enctype="application/x-www-form-urlencoded">
                   <div class="row">
                     <div class="col-12">
                       <div class="form-group">
-
                         <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9"
                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'"
                           placeholder='Enter Message'></textarea>
@@ -143,7 +142,7 @@
                     </div>
                   </div>
                   <div class="form-group mt-3">
-                    <button id="submit" class="button button-contactForm btn_4">Send Message</button>
+                    <button id="submit" type="submit" class="button button-contactForm btn_4">Send Message</button>
                   </div>
                   <div id="messageSent">
                   </div>
@@ -263,7 +262,7 @@
 
         <!-- jquery plugins here-->
         <!-- jquery library-->
-        <script src="/static/js/jquery-3.4.1.min.js"></script>
+        <script src="static/js/jquery-3.4.1.min.js"></script>
         <!-- popper js -->
         <script src="static/js/popper.min.js"></script>
         <!-- bootstrap js -->
@@ -283,6 +282,7 @@
         <script src="static/js/owl.carousel.min.js"></script>
         <!-- swiper js -->
         <script src="static/js/slick.min.js"></script>
+
       </body>
 
       </html>
