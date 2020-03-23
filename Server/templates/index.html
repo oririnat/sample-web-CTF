@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -138,6 +137,38 @@
     </section>
     <!-- about part start-->
 
+    <!-- ================ contact section start ================= -->
+    <section class="contact-section section_padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="contact-title">Transfer money</h2>
+          </div>
+          <div class="col-lg-8">
+            <form class="form-contact contact_form" action="/transfer-money" method="post">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <input class="form-control" name="sendTo" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Sent to'" placeholder = 'Sent to'>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <input class="form-control" name="amount" type="number" min="0" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter amount of money'" placeholder = 'Enter amount of money'>
+                  </div>
+                </div>
+              </div>
+              <p>{{transferMoneyMessage}}</p>
+              <div class="form-group mt-3">
+                <button type="submit" class="button button-contactForm btn_4">Send Money</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================ contact section end ================= -->
+
     <!-- service_part start-->
     <section class="service_part section_padding gray_bg">
         <div class="container">
@@ -173,62 +204,6 @@
         </div>
     </section>
     <!-- upcoming_event part start-->
-    <!-- portfolio_part start-->
-    <section class="portfolio_part section_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card-columns">
-                        <div class="card">
-                            <blockquote class="blockquote mb-0">
-                                <h2>Explore Our Best
-                                    Practice Area</h2>
-                                <p>Male bring land. Dominion over can yielding his moveth under him is.
-                                    Multiply which firmament</p>
-                            </blockquote>
-                        </div>
-                        <div class="card">
-                            <img src="static/img/gallery/gallery_item.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a href="project_details">
-                                    <h5 class="card-title">Startup Project</h5>
-                                </a>
-                                <p class="card-text">All days lights grass midst from unto</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img src="static/img/gallery/gallery_item_1.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a href="project_details">
-                                    <h5 class="card-title">Startup Project</h5>
-                                </a>
-                                <p class="card-text">All days lights grass midst from unto</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img src="static/img/gallery/gallery_item_2.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a href="project_details">
-                                    <h5 class="card-title">Startup Project</h5>
-                                </a>
-                                <p class="card-text">All days lights grass midst from unto</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img src="static/img/gallery/gallery_item_3.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <a href="project_details">
-                                    <h5 class="card-title">Startup Project</h5>
-                                </a>
-                                <p class="card-text">All days lights grass midst from unto</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- portfolio_part part end-->
 
     <!-- our_service_part part start-->
     <section class="about_part our_service_part padding_top">
@@ -258,7 +233,6 @@
         <div class="hero-app-8 custom-animation3"><img src="static/img/animate_icon/icon_9.png" alt=""></div>
     </section>
     <!--::blog_part start::-->
-
 
     <!--::blog_part start::-->
     <section class="blog_part section_padding">

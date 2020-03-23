@@ -47,9 +47,12 @@ def addMoney(username, amoutToAdd):
 	usersLines = list(usersFile)
 	for i in range(len(usersLines)):
 		if(usersLines[i][0] == username):
+			if ((int(usersLines[i][2]) + int(amoutToAdd)) < 0):
+				return False
 			usersLines[i][2] = int(usersLines[i][2]) + int(amoutToAdd)
 	writer = csv.writer(open('data/users.csv', 'w'))
 	writer.writerows(usersLines)
+	return True
 
 def getUserUsernameAndMoney():
 	if 'username' not in session:
@@ -65,9 +68,24 @@ def getUserUsernameAndMoney():
 	for i in range(len(usersLines)):
 		return usersLines[i][2]
 
-@app.route("/transfer-money")
+@app.route("/transfer-money", methods=["post"])
 def transfer_money():
-	return "OK"
+	if 'username' not in session:
+		return render_template("login.html")
+
+	form_sendTo = request.form["sendTo"]
+	form_amount = request.form["amount"]
+
+	if(not isUserNameExist(form_sendTo)):
+		return render_template("index.html", money=getUserUsernameAndMoney(), transferMoneyMessage="There is no such user name")
+
+	if(addMoney(session['username'], -1 * int(form_amount))):
+		addMoney(form_sendTo, form_amount)
+		return render_template("index.html", money=getUserUsernameAndMoney(), transferMoneyMessage="Money transfered successfully")
+
+	else:
+		return render_template("index.html", money=getUserUsernameAndMoney(), transferMoneyMessage="You dont have enough money")
+
 
 @app.route("/register")
 def register():
@@ -78,78 +96,78 @@ def login():
 	if(isUserLogin()):
 		return redirect(url_for('/'))
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/logout")
 def logout():
 	if 'username' not in session or 'pass' not in session:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 	session.pop('username')
 	session.pop('pass')
-	return render_template("login.html", money=getUserUsernameAndMoney())
+	return render_template("login.html")
 
 @app.route("/")
 def home():
 	if(isUserLogin()):
 		return render_template("index.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/index")
 def index():
 	if(isUserLogin()):
 		return render_template("index.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/blog")
 def blog():
 	if(isUserLogin()):
 		return render_template("blog.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/single-blog")
 def single_blog():
 	if(isUserLogin()):
 		return render_template("single-blog.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/project")
 def project():
 	if(isUserLogin()):
 		return render_template("project.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/project_details")
 def project_details():
 	if(isUserLogin()):
 		return render_template("project_details.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/service")
 def service():
 	if(isUserLogin()):
 		return render_template("service.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/elements")
 def elements():
 	if(isUserLogin()):
 		return render_template("elements.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.route("/contact")
 def contact():
 	if(isUserLogin()):
 		return render_template("contact.html", money=getUserUsernameAndMoney())
 	else:
-		return render_template("login.html", money=getUserUsernameAndMoney())
+		return render_template("login.html")
 
 @app.before_request
 def make_session_permanent():
