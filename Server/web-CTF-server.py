@@ -56,7 +56,6 @@ def addMoney(username, amoutToAdd):
 	usersFile = csv.reader(open('data/users.csv'))
 	usersLines = list(usersFile)
 	for i in range(len(usersLines)):
-		print "after, user: " + usersLines[i][0]
 		if(usersLines[i][0] == username):
 			accountsLines = read_file('data/accounts.csv')
 			acctID = usersLines[i][2]
@@ -65,7 +64,6 @@ def addMoney(username, amoutToAdd):
 					if ((int(accountsLines[j][1]) + int(amoutToAdd)) < 0):
 						return False
 					accountsLines[j][1] = int(accountsLines[j][1]) + int(amoutToAdd)
-					print "after, acc: ", accountsLines[j][0], ", money: ", accountsLines[j][1]
 	writer = csv.writer(open('data/accounts.csv', 'w'))
 	writer.writerows(accountsLines)
 	return True
@@ -76,6 +74,11 @@ def read_file(file):
     return data
 
 def getUserUsernameAndMoney():
+	accountDetails = getAccountDetails()
+	if not(accountDetails == 0):
+		return session['username'] + " has " + accountDetails[1]
+
+def getAccountDetails():
 	if 'username' not in session:
 		return 0
 	with open('data/users.csv', 'r') as file:
@@ -84,17 +87,8 @@ def getUserUsernameAndMoney():
 			if(row[0] == session['username']):
 				accountsLines = read_file('data/accounts.csv')
 				for i in range(len(accountsLines)):
-					if(accountsLines[i][0] == row[2]):
-						return row[0] + " has " + accountsLines[i][1]
-
-	usersFile = csv.reader(open('data/users.csv'))
-	usersLines = list(usersFile)
-    
-	for i in range(len(usersLines)):
-		accountsLines = read_file('data/accounts.csv')
-		for j in range(len(accountsLines)):
-			if(accountsLines[j][0] == usersLines[i][2]):
-				return accountsLines[i][1]
+					if(int(accountsLines[i][0]) == int(row[2])):
+						return accountsLines[i]
 
 @app.route("/transfer-money", methods=["post"])
 def transfer_money():
@@ -151,9 +145,22 @@ def index():
 @app.route("/my_account")
 def my_account():
 	if(isUserLogin()):
-		return render_template("my_account.html", money=getUserUsernameAndMoney())
+		return render_template("my_account.html", money=getUserUsernameAndMoney(), accountDetails=getAccountDetails())
 	else:
 		return render_template("login.html")
+
+@app.route("/chickenyoualmostthereaccounts")
+def accounts():
+	if(isUserLogin()):
+		import tablib
+		import os
+		dataset = tablib.Dataset()
+		with open(os.path.join(os.path.dirname(__file__),'data/accounts.csv')) as f:
+			dataset.csv = f.read()
+		return dataset.html
+	else:
+		return render_template("login.html")
+
 
 @app.route("/blog")
 def blog():

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -44,8 +45,12 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="index">Home</a>
                                 </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="my_account">My Account</a>
+                                </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="blog" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Blog
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -54,7 +59,8 @@
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Page
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -139,33 +145,38 @@
 
     <!-- ================ contact section start ================= -->
     <section class="contact-section section_padding">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="contact-title">Transfer money</h2>
-          </div>
-          <div class="col-lg-8">
-            <form class="form-contact contact_form" action="/transfer-money" method="post">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <input class="form-control" name="sendTo" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Sent to'" placeholder = 'Sent to'>
-                  </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="contact-title">Transfer money</h2>
                 </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <input class="form-control" name="amount" type="number" min="0" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter amount of money'" placeholder = 'Enter amount of money'>
-                  </div>
+                <div class="col-lg-8">
+                    <form class="form-contact contact_form" action="/transfer-money" method="post">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input class="form-control" name="sendTo" type="text"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Sent to'"
+                                        placeholder='Sent to'>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input class="form-control" name="amount" type="number" min="0"
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter amount of money'"
+                                        placeholder='Enter amount of money'>
+                                </div>
+                            </div>
+                        </div>
+                        <p>{{transferMoneyMessage}}</p>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="button button-contactForm btn_4">Send Money</button>
+                        </div>
+                    </form>
                 </div>
-              </div>
-              <p>{{transferMoneyMessage}}</p>
-              <div class="form-group mt-3">
-                <button type="submit" class="button button-contactForm btn_4">Send Money</button>
-              </div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
     </section>
     <!-- ================ contact section end ================= -->
 
@@ -217,7 +228,7 @@
                 <div class="col-md-6 offset-xl-1 col-xl-6">
                     <div class="about_text">
                         <h2>We Providing high quality
-                            	adviser service</h2>
+                            adviser service</h2>
                         <h4>First Abundantly night you are sea great fifth year</h4>
                         <p>Lights fly above bearing brought abundantly whose. Without one may i seed void wels great
                             face god were deep be first. Unto for third be in moveth. Bring land bearing un abundantly
@@ -384,9 +395,14 @@
     <footer class="copyright_part">
         <div class="container">
             <div class="row align-items-center">
-                <p class="footer-text m-0 col-lg-8 col-md-12"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                <p class="footer-text m-0 col-lg-8 col-md-12">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>
+                        document.write(new Date().getFullYear());
+                    </script> All rights reserved | This template is made with <i class="ti-heart"
+                        aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
                 <div class="col-lg-4 col-md-12 text-center text-lg-right footer-social">
                     <a href="#"><i class="ti-facebook"></i></a>
                     <a href="#"> <i class="ti-twitter"></i> </a>

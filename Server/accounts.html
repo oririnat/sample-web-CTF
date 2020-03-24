@@ -88,32 +88,6 @@
     </header>
     <!-- Header part end-->
 
-    <!-- banner part start-->
-    <section class="banner_part">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-7 col-xl-6">
-                    <div class="banner_text">
-                        <div class="banner_text_iner">
-                            <h1>My Account</h1>
-                            <p>Here you can see some details about your account.
-                                You can <b>access</b> and <b>control</b> every detail ;)</p>
-                            <a href="#" class="btn_1">learn more </a>
-                            <a href="https://www.youtube.com/watch?v=pBFQdxA-apI" class="popup-youtube video_popup">
-                                <span><img src="static/img/icon/play.svg" alt=""></span> Intro Video</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="hero-app-1 custom-animation"><img src="static/img/animate_icon/icon_1.png" alt=""></div>
-        <div class="hero-app-2 custom-animation2"><img src="static/img/animate_icon/icon_2.png" alt=""></div>
-        <div class="hero-app-5 custom-animation4"><img src="static/img/animate_icon/icon_5.png" alt=""></div>
-        <div class="hero-app-7 custom-animation2"><img src="static/img/animate_icon/icon_7.png" alt=""></div>
-        <div class="hero-app-8 custom-animation"><img src="static/img/animate_icon/icon_8.png" alt=""></div>
-    </section>
-    <!-- banner part start-->
-
     <!-- about part start-->
     <section class="about_part">
         <div class="container">
@@ -124,7 +98,8 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 offset-xl-1 col-xl-6">
-                    <div class="about_text">
+                    {{accounts}}
+                    <!--<div class="about_text">
                         <h2>Your account number is:
                         </h2>
                         <h4>{{accountDetails[0]}}</h4>
@@ -135,7 +110,7 @@
                         </h2>
                         <h4>{{accountDetails[2]}}</h4>
                         <a href="#" class="btn_2">read more</a>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>

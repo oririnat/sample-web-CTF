@@ -1,4 +1,4 @@
-admin,admin,0
-ori,pass,1
-arad,pass,2
-aradtry,pass,3
+admin,admin,0,0
+ori,pass,1,1
+arad,pass,2,1
+aradtry,pass,3,1
