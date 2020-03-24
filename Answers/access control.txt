@@ -1,0 +1,8 @@
+Get the url http://localhost:5000/chickenyoualmostthereaccounts
+check for all available links in our website via link checker and site crawling
+
+another way via console in developer tools:
+urls = document.querySelectorAll('a'); for (url in urls) console.log(urls[url].href);
+
+shortened:
+n=$$('a');for(u in n)console.log(n[u].href)
