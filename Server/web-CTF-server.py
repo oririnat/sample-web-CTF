@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import csv
-from datetime import timedelta
+from datetime import timedelta, date
 
 app = Flask(__name__)
 
@@ -10,8 +10,12 @@ def register_to_system():
 	form_password = request.form["pass"]
 	if(not isUserNameExist(form_username)):
 		users_file = open('data/users.csv', 'a')
-		users_file.write(form_username + "," + form_password + ", 0\n")
+		currID = file_len('data/users.csv');
+		users_file.write(form_username + "," + form_password + "," + str(currID) + "\n")
 		users_file.close()
+		accounts_file = open('data/accounts.csv', 'a')
+		accounts_file.write(str(currID) + ",0," + str(date.today()) + "\n")
+		accounts_file.close()
 		return redirect(url_for('login'))
 	return render_template("register.html", money=getUserUsernameAndMoney(), invalid='Invalid user username')
 
@@ -23,6 +27,12 @@ def try_login_to_page():
 		return redirect(url_for('index'))
 	else:
 		return redirect(url_for('login'))
+
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
 
 def isUserLogin():
 	if 'username' not in session or 'pass' not in session:
@@ -38,7 +48,7 @@ def isUserNameExist(username):
 	with open('data/users.csv', 'r') as file:
 		reader = csv.reader(file)
 		for row in reader:
-			if(row[0] == username):
+			if((row is not None) and (row[0] == username)):
 				return True;
 	return False
 
@@ -46,13 +56,24 @@ def addMoney(username, amoutToAdd):
 	usersFile = csv.reader(open('data/users.csv'))
 	usersLines = list(usersFile)
 	for i in range(len(usersLines)):
+		print "after, user: " + usersLines[i][0]
 		if(usersLines[i][0] == username):
-			if ((int(usersLines[i][2]) + int(amoutToAdd)) < 0):
-				return False
-			usersLines[i][2] = int(usersLines[i][2]) + int(amoutToAdd)
-	writer = csv.writer(open('data/users.csv', 'w'))
-	writer.writerows(usersLines)
+			accountsLines = read_file('data/accounts.csv')
+			acctID = usersLines[i][2]
+			for j in range(len(accountsLines)):
+				if(accountsLines[j][0] == acctID):
+					if ((int(accountsLines[j][1]) + int(amoutToAdd)) < 0):
+						return False
+					accountsLines[j][1] = int(accountsLines[j][1]) + int(amoutToAdd)
+					print "after, acc: ", accountsLines[j][0], ", money: ", accountsLines[j][1]
+	writer = csv.writer(open('data/accounts.csv', 'w'))
+	writer.writerows(accountsLines)
 	return True
+
+def read_file(file):
+    with open(file, 'r') as f:
+        data = [row for row in csv.reader(f.read().splitlines())]
+    return data
 
 def getUserUsernameAndMoney():
 	if 'username' not in session:
@@ -61,12 +82,19 @@ def getUserUsernameAndMoney():
 		reader = csv.reader(file)
 		for row in reader:
 			if(row[0] == session['username']):
-				return row[0] + " has " + row[2]
+				accountsLines = read_file('data/accounts.csv')
+				for i in range(len(accountsLines)):
+					if(accountsLines[i][0] == row[2]):
+						return row[0] + " has " + accountsLines[i][1]
 
 	usersFile = csv.reader(open('data/users.csv'))
 	usersLines = list(usersFile)
+    
 	for i in range(len(usersLines)):
-		return usersLines[i][2]
+		accountsLines = read_file('data/accounts.csv')
+		for j in range(len(accountsLines)):
+			if(accountsLines[j][0] == usersLines[i][2]):
+				return accountsLines[i][1]
 
 @app.route("/transfer-money", methods=["post"])
 def transfer_money():
@@ -117,6 +145,13 @@ def home():
 def index():
 	if(isUserLogin()):
 		return render_template("index.html", money=getUserUsernameAndMoney())
+	else:
+		return render_template("login.html")
+
+@app.route("/my_account")
+def my_account():
+	if(isUserLogin()):
+		return render_template("my_account.html", money=getUserUsernameAndMoney())
 	else:
 		return render_template("login.html")
 
