@@ -1,0 +1,35 @@
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: 1px solid #ccc;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 4px;
+    width: 29%;
+    height: 20%;
+}
+
+tr {
+    color: saddlebrown;
+
+}
+
+td {
+    color: sandybrown;
+}
+
+#accounts {
+    margin: auto;
+    width: 50%;
+    border: 3px solid rgb(228, 173, 90);
+    padding: 10px;
+}
+
+#accounts_title {
+    text-align: center;
+}
