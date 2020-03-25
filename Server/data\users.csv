@@ -1,10 +1,5 @@
-admin,admin,0,0
-ori,pass,1,1
-arad,pass,2,1
-aradtry,pass,3,1
-aradsdf,pass,4
-arad1,pass,5
-arad2,pass,6
-arad3,pass,7
-arad4,pass,8
-arad5,pass,9
+ori,pass,0
+admin,admin,1
+test,pass,2
+arad,pass,3
+a,pass,4
