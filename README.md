@@ -33,3 +33,5 @@ DOM based XSS.
 
 Bypassing access control checks by modifying the URL.
 Force browsing to authenticated pages as an unauthenticated user or to privileged pages as a standard user.
+
+https://dzone.com/articles/cookies-vs-tokens-the-definitive-guide

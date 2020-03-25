@@ -1,8 +1,36 @@
-from flask import Flask, render_template, request, session, redirect, url_for,make_response
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for, make_response
 import csv
-from datetime import timedelta, date
+import datetime
+import jwt
+from functools import wraps
 
 app = Flask(__name__)
+
+def token_requird(f):
+	@wraps(f)
+	def decorated(*args, **Kwargs):
+		token = request.cookies.get('token')
+		if not token:
+			return render_template("login.html")
+		try:
+			data = jwt.decode(token, app.config['SECRET_KEY'])
+		except:
+			return render_template("login.html")
+		return f(*args, **Kwargs)
+	return decorated
+
+def moveToPageAndUpdateToken(path):
+	token = request.cookies.get('token')
+	if not token:
+		return render_template("login.html")
+	try:
+		data = jwt.decode(token, app.config['SECRET_KEY'])
+		token = jwt.encode({'user' : data['user'], 'id' : data['id'], 'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds = 60 * 60 * 2)}, app.config['SECRET_KEY'])
+		response = make_response(render_template(path, money=getUserData()[1], username=getUserData()[3]))
+		response.set_cookie('token', value=token.decode('UTF-8'), max_age=None)
+		return response
+	except:
+		return render_template("login.html")
 
 @app.route("/register_to_system", methods=["POST"])
 def register_to_system():
@@ -16,7 +44,7 @@ def register_to_system():
 		accounts_file.write(str(nextUserId() - 1) + ",0," + str(date.today()) + "," + form_username +"\n")
 		accounts_file.close()
 		return redirect(url_for('login'))
-	return render_template("register.html", money=getUserMoney(), username=getUserUsername(), invalid='Invalid user username')
+	return render_template("register.html", invalid='Invalid user username')
 
 @app.route("/try_login_to_page", methods=["post"])
 def try_login_to_page():
@@ -24,22 +52,14 @@ def try_login_to_page():
 		reader = csv.reader(file)
 		for row in reader:
 			if(row[0] == request.form["username"] and row[1] == request.form["pass"]):
+				token = jwt.encode({'user' : request.form["username"],
+									'id' : row[2],
+				 					'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds = 60 * 60 * 2)},
+									 app.config['SECRET_KEY'])
 				response = make_response(redirect('/'))
-				response.set_cookie('token', value=row[2], max_age=None)
-				session['tokenId'] = row[2]
+				response.set_cookie('token', value=token.decode('UTF-8'), max_age=None)
 				return response
-	return render_template("register.html", money=getUserMoney(), username=getUserUsername(), invalid='Error')
-
-def isUserLogin():
-	if not request.cookies.get('token'):
-		return False
-	else:
-		with open('data/accounts.csv', 'r') as accounts:
-			accountsReader = csv.reader(accounts)
-			for account in accountsReader:
-				if(account[0] == request.cookies.get('token')):
-					return True;
-	return False
+	return render_template("register.html", invalid='Error')
 
 def nextUserId():
 	lastRow = None
@@ -66,16 +86,14 @@ def transfer_money():
 	else:
 		form_sendTo = request.form["sendTo"]
 		form_amount = request.form["amount"]
-
 		if(not isUserNameExist(form_sendTo)):
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername(), transferMoneyMessage="There is no such user name")
+			return render_template("index.html", money=getUserData()[1], username=getUserData()[3], transferMoneyMessage="There is no such user name")
 
-		if(addMoney(session['tokenId'], -1 * int(form_amount))): # fix me
+		if(addMoney(getDataFromJWT()['id'], -1 * int(form_amount))): # fix me
 			addMoney(getIdFromUsername(form_sendTo), form_amount)
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername(), transferMoneyMessage="Money transfered successfully")
-
+			return render_template("index.html", money=getUserData()[1], username=getUserData()[3], transferMoneyMessage="Money transfered successfully")
 		else:
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername(), transferMoneyMessage="You dont have enough money")
+			return render_template("index.html", money=getUserData()[1], username=getUserData()[3], transferMoneyMessage="You dont have enough money")
 
 def addMoney(tokenId, amoutToAdd):
 	accountsLines = read_file('data/accounts.csv')
@@ -93,25 +111,22 @@ def read_file(file):
         data = [row for row in csv.reader(f.read().splitlines())]
     return data
 
-def getUserUsername():
-	if not request.cookies.get('token'):
-		return 'error'
-	else:
-		accountsLines = read_file('data/accounts.csv')
-		for i in range(len(accountsLines)):
-			if(accountsLines[i][0] == request.cookies.get('token')):
-				return accountsLines[i][3]
-		return 'error'
+def getDataFromJWT():
+	token = request.cookies.get('token')
+	if not token:
+		return render_template("login.html")
+	try:
+		return jwt.decode(token, app.config['SECRET_KEY'])
+	except:
+		return render_template("login.html")
 
-def getUserMoney():
-	if not request.cookies.get('token'):
-		return 0
-	else:
-		accountsLines = read_file('data/accounts.csv')
-		for i in range(len(accountsLines)):
-			if(accountsLines[i][0] == request.cookies.get('token')):
-				return accountsLines[i][1]
-		return 0
+def getUserData():
+	userId = getDataFromJWT()['id']
+	accountsLines = read_file('data/accounts.csv')
+	for i in range(len(accountsLines)):
+		if(accountsLines[i][0] == userId):
+			return accountsLines[i]
+	return 'error'
 
 def getIdFromUsername(username):
 	with open('data/users.csv', 'r') as file:
@@ -119,16 +134,17 @@ def getIdFromUsername(username):
 		for row in reader:
 			if(row[0] == username):
 				return row[2]
+
 def isUserIsAdmin():
 	accountsLines = read_file('data/accounts.csv')
 	for i in range(len(accountsLines)):
-		if(accountsLines[i][0] == request.cookies.get('token') and accountsLines[i][3] == 'admin'):
+		if(accountsLines[i][0] == getDataFromJWT()['id'] and accountsLines[i][3] == 'admin'):
 			return True
 	return False
 
 @app.route("/register")
 def register():
-	return render_template("register.html", money=getUserMoney(), username=getUserUsername())
+	return render_template("register.html")
 
 @app.route("/login", methods=["get"])
 def login():
@@ -140,83 +156,61 @@ def logout():
 		return render_template("login.html")
 	resp = make_response(render_template("login.html"))
 	resp.set_cookie('token', expires=0)
-	session['tokenId'] = ''
 	return resp
 
 @app.route("/")
+@token_requird
 def home():
-	if(isUserLogin()):
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("index.html")
 
 @app.route("/index")
+@token_requird
 def index():
-	if(isUserLogin()):
-		if(isUserIsAdmin()):
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername(), adminBotton="<p>text</p>")
-		return render_template("index.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("index.html")
 
 @app.route("/my_account")
+@token_requird
 def my_account():
-	if(isUserLogin()):
-		return render_template("my_account.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("my_account.html")
 
 @app.route("/blog")
+@token_requird
 def blog():
-	if(isUserLogin()):
-		return render_template("blog.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("blog.html")
 
 @app.route("/single-blog")
+@token_requird
 def single_blog():
-	if(isUserLogin()):
-		return render_template("single-blog.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("single-blog.html")
 
 @app.route("/project")
+@token_requird
 def project():
-	if(isUserLogin()):
-		return render_template("project.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("project.html")
 
 @app.route("/project_details")
+@token_requird
 def project_details():
-	if(isUserLogin()):
-		return render_template("project_details.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("project_details.html")
 
 @app.route("/service")
+@token_requird
 def service():
-	if(isUserLogin()):
-		return render_template("service.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("service.html")
 
 @app.route("/elements")
+@token_requird
 def elements():
-	if(isUserLogin()):
-		return render_template("elements.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("elements.html")
 
 @app.route("/contact")
+@token_requird
 def contact():
-	if(isUserLogin()):
-		return render_template("contact.html", money=getUserMoney(), username=getUserUsername())
-	else:
-		return render_template("login.html")
+	return moveToPageAndUpdateToken("contact.html")
 
 if __name__ == "__main__":
 	app.secret_key = 'super secret key'
+	app.config['SECRET_KEY'] = 'jwtSecretKey!@#'
 	app.config['SESSION_TYPE'] = 'filesystem'
 
 	app.run(debug=True)
