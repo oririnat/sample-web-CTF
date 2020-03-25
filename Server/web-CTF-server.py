@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import csv
 from datetime import timedelta, date
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -111,7 +112,7 @@ def transfer_money():
 
 @app.route("/register")
 def register():
-	return render_template("register.html", money=getUserUsernameAndMoney())
+	return render_template("register.html")
 
 @app.route("/login", methods=["get"])
 def login():
@@ -152,12 +153,9 @@ def my_account():
 @app.route("/chickenyoualmostthereaccounts")
 def accounts():
 	if(isUserLogin()):
-		import tablib
-		import os
-		dataset = tablib.Dataset()
-		with open(os.path.join(os.path.dirname(__file__),'data/accounts.csv')) as f:
-			dataset.csv = f.read()
-		return dataset.html
+		columns = ['Account ID', 'Money', 'Joining Date']
+		df = pd.read_csv("data/accounts.csv", names=columns)
+		return render_template("accounts.html", money=getUserUsernameAndMoney(), accountDetails=getAccountDetails(), accounts=df.to_html())
 	else:
 		return render_template("login.html")
 

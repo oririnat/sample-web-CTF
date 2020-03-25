@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
     <!-- style CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/accounts.css') }}">
 </head>
 
 <body>
@@ -98,8 +100,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 offset-xl-1 col-xl-6">
-                    {{accounts}}
-                    <!--<div class="about_text">
+                    <div class="about_text">
                         <h2>Your account number is:
                         </h2>
                         <h4>{{accountDetails[0]}}</h4>
@@ -110,7 +111,7 @@
                         </h2>
                         <h4>{{accountDetails[2]}}</h4>
                         <a href="#" class="btn_2">read more</a>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -118,6 +119,12 @@
         <div class="hero-app-8 custom-animation2"><img src="static/img/animate_icon/icon_2.png" alt=""></div>
         <div class="hero-app-6 custom-animation3"><img src="static/img/animate_icon/icon_3.png" alt=""></div>
     </section>
+
+    <div id="accounts">
+        <h1 id="accounts_title">all accounts</h1>
+        {{accounts | safe}}
+    </div>
+
     <!-- about part start-->
 
     <!-- ================ contact section end ================= -->
@@ -129,7 +136,8 @@
                 <div class="col-sm-12 col-lg-8 col-xl-4">
                     <div class="single_service_text">
                         <h2>We Provide Best Services</h2>
-                        <p>Male bring land dominion over can't yielding. His order moveth under of dry brought him is.
+                        <p>Male bring land dominion over can't yielding. His order moveth under of dry brought him
+                            is.
                             Multiply which firmament deep make. Male bring land. Dominion over can't yielding. His
                             moveth under of dry brought him is. Multiply which firmament deep make.</p>
                         <a href="#" class="btn_2">Load More</a>
@@ -139,7 +147,8 @@
                     <div class="single_service_part">
                         <span class="single_service_icon"><i class="flaticon-growth"></i></span>
                         <h4>Business Opportunity</h4>
-                        <p>Show wherein form yielding whala readeat gathered wherein moved. Behold may be winged created
+                        <p>Show wherein form yielding whala readeat gathered wherein moved. Behold may be winged
+                            created
                             that Won't theya are second god give </p>
                         <a href="#" class="btn_3">Learn More <i class="ti-arrow-right"></i></a>
                     </div>
@@ -148,7 +157,8 @@
                     <div class="single_service_part single_service_part_2">
                         <span class="single_service_icon style_icon"><i class="flaticon-wallet"></i></span>
                         <h4>Commercial Approach</h4>
-                        <p>Show wherein form yielding whala readeat gathered wherein moved. Behold may be winged created
+                        <p>Show wherein form yielding whala readeat gathered wherein moved. Behold may be winged
+                            created
                             that Won't theya are second god give </p>
                         <a href="#" class="btn_3 service_btn">Learn More <i class="ti-arrow-right"></i></a>
                     </div>
@@ -173,8 +183,10 @@
                             adviser service</h2>
                         <h4>First Abundantly night you are sea great fifth year</h4>
                         <p>Lights fly above bearing brought abundantly whose. Without one may i seed void wels great
-                            face god were deep be first. Unto for third be in moveth. Bring land bearing un abundantly
-                            firmament appear whales them years. Lights fly above bearing brought bold abundantly whose
+                            face god were deep be first. Unto for third be in moveth. Bring land bearing un
+                            abundantly
+                            firmament appear whales them years. Lights fly above bearing brought bold abundantly
+                            whose
                             without one may i seed. </p>
                         <a href="#" class="btn_2">read more</a>
                     </div>
