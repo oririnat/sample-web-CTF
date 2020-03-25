@@ -67,12 +67,17 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="contact">Contact</a>
                                 </li>
+                                {% if username == 'admin' %}
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="chickenyoualmostthereaccounts">Accounts</a>
+                                </li>
+                                {% endif %}
                                 <li class="nav-item active">
                                     <a class="nav-link" href="logout">Logout</a>
                                 </li>
                             </ul>
                             <h3 style="width: 200px;">
-                                {{money}} $
+                                {{username}} has {{money}} $
                             </h3>
                         </div>
                     </nav>
