@@ -171,7 +171,26 @@ def index():
 @app.route("/my_account")
 @token_requird
 def my_account():
-	return moveToPageAndUpdateToken("my_account.html")
+	return render_template("my_account.html", money=getUserData()[1], username=getUserData()[3], accountDetails=getUserData())
+
+@app.route("/chickenyoualmostthereaccounts")
+@token_requird
+def accounts():
+	if isUserIsAdmin():
+		messages = []
+		messages.append("<table>")
+		messages.append("<th>")
+		messages.append("<td>Account ID</td>")
+		messages.append("<td>Money</td>")
+		messages.append("<td>Joining Date</td>")
+		messages.append("</th>")
+
+		with open('data/accounts.csv', 'r') as file:
+			reader = csv.reader(file)
+			accountsList = list(reader)
+
+		return render_template("accounts.html", money=getUserData()[1], username=getUserData()[3], accountDetails=getUserData(), len=len(accountsList), accounts=accountsList)
+	return render_template("not_authorized.html", money=getUserData()[1], username=getUserData()[3])
 
 @app.route("/blog")
 @token_requird

@@ -45,8 +45,17 @@
                                 <li class="nav-item active">
                                     <a class="nav-link" href="index">Home </a>
                                 </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="my_account">My Account</a>
+                                </li>
+                                {% if username == 'admin' %}
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="chickenyoualmostthereaccounts">Accounts</a>
+                                </li>
+                                {% endif %}
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="blog" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Blog
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -55,7 +64,8 @@
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Page
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -135,8 +145,8 @@
         </div>
     </section>
     <!-- service_part start-->
-<!--::review_part start::-->
-<section class="review_part section_padding">
+    <!--::review_part start::-->
+    <section class="review_part section_padding">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-5">
@@ -283,9 +293,14 @@
     <footer class="copyright_part">
         <div class="container">
             <div class="row align-items-center">
-                <p class="footer-text m-0 col-lg-8 col-md-12"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                <p class="footer-text m-0 col-lg-8 col-md-12">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>
+                        document.write(new Date().getFullYear());
+                    </script> All rights reserved | This template is made with <i class="ti-heart"
+                        aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
                 <div class="col-lg-4 col-md-12 text-center text-lg-right footer-social">
                     <a href="#"><i class="ti-facebook"></i></a>
                     <a href="#"> <i class="ti-twitter"></i> </a>
