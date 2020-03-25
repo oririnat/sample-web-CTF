@@ -172,9 +172,11 @@ def my_account():
 @app.route("/chickenyoualmostthereaccounts")
 def accounts():
 	if(isUserLogin()):
-		columns = ['Account ID', 'Money', 'Joining Date']
-		df = pd.read_csv("data/accounts.csv", names=columns)
-		return render_template("accounts.html", money=getCurrAccount()[1], username=getCurrUsername(), accountDetails=getCurrAccount(), accounts=df.to_html())
+		if isUserIsAdmin():
+			columns = ['Account ID', 'Money', 'Joining Date']
+			df = pd.read_csv("data/accounts.csv", names=columns)
+			return render_template("accounts.html", money=getCurrAccount()[1], username=getCurrUsername(), accountDetails=getCurrAccount(), accounts=df.to_html())
+		return render_template("not_authorized.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
