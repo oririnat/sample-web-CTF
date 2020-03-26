@@ -12,9 +12,9 @@ You have been selected to be one of the special programmers that fight along wit
 As a start :
 Find the most 3 coolest and interesting web attacks committed in the last years in the world.
 
-Cool right?
+### Cool right?
 
-new for the theoretical part : ( 1 / 2 day)
+## New for the theoretical part : ( 1 / 2 day)
 Get familiar with the following topics :
 	- Authentication.
 	- Session management.
@@ -30,14 +30,14 @@ Get familiar with the following topics :
 	- Brute-Force Attacks (not only for passwords)
 	- certificates
 
-Practical part : ( 1 / 2 day)
-		now we got to the fun part.
-		In the PATH_TO_SERVER_ON_FILESRV, you can find web server serve a simple
-		back site.
-		We created this site carefully with a lot of vulnerabilities,
-		Dig down, search and research for as many vulnerabilities as you can find.
+## Practical part : ( 1 / 2 day)
+now we got to the fun part.
+In the PATH_TO_SERVER_ON_FILESRV, you can find web server serve a simple
+back site.
+We created this site carefully with a lot of vulnerabilities,
+Dig down, search and research for as many vulnerabilities as you can find.
 
-list of needed fixes :
+### List of needed fixes :
 	- Hash to passwords
 	- Add token base authentication
 		- Add JWT
