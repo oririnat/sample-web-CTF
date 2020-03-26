@@ -30,7 +30,7 @@ Get familiar with the following topics :
 	- Brute-Force Attacks (not only for passwords)
 	- certificates
 
-	Practical part : ( 1 / 2 day)
+Practical part : ( 1 / 2 day)
 		now we got to the fun part.
 		In the PATH_TO_SERVER_ON_FILESRV, you can find web server serve a simple
 		back site.
@@ -38,37 +38,23 @@ Get familiar with the following topics :
 		Dig down, search and research for as many vulnerabilities as you can find.
 
 list of needed fixes :
-- Hash to passwords
-- Add token base authentication
-	- Add JWT
-- Obfuscation to client code
-- Cross site forgery attack
-- Prevent Brute-Force Attacks
-- XSS
-- Access control
-- Session management
-- add ssl to site
-- Directory Traversal Attacks using "DirBuster"
-
-The tokenId saves per session rather to by sent in etch request as cookie
-The token dose not change ones in a while
-The token is very easy to guess
-
-Session IDs exposed on URL can lead to session fixation attack.
-Session IDs same before and after logout and login.
-Session Timeouts are not implemented correctly.
-Application is assigning same session ID for each new session.
-Authenticated parts of the application are protected using SSL and passwords are stored in hashed or
-encrypted format.
-The session can be reused by a low privileged user.
-
-HTML injection.
-JS injection
-Reflected XSS.
-Stored XSS.
-DOM based XSS.
-
-Bypassing access control checks by modifying the URL.
-Force browsing to authenticated pages as an unauthenticated user or to privileged pages as a standard user.
+	- Hash to passwords
+	- Add token base authentication
+		- Add JWT
+	- Obfuscation to client code
+	- The tokenId saves per session rather to by sent in etch request as cookie
+	- Prevent Brute-Force Attacks
+	- The token dose not change ones in a while
+	- The token is very easy to guess
+	- add ssl to site
+	- Session IDs exposed on URL can lead to session fixation attack.
+	- Session IDs same before and after logout and login.
+	- Session Timeouts are not implemented correctly.
+	- Application is assigning same session ID for each new session.
+	- Authenticated parts of the application are protected using SSL and passwords are stored in hashed or
+	encrypted format.
+	- The session can be reused by a low privileged user.
+	- Bypassing access control checks by modifying the URL.
+	- Force browsing to authenticated pages as an unauthenticated user or to privileged pages as a standard user.
 
 https://dzone.com/articles/cookies-vs-tokens-the-definitive-guide
