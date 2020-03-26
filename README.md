@@ -1,6 +1,5 @@
 Sample web CTF, in this CTF you will face with web vulnerabilities from the concepts of : authentication, access control, session management, input handling - XSS &amp; SQL injection and certificates
 
-
 Today it seems like all the big important systems are on the web.
 For example Facebook, Google, Amazon, Airport ...
 As programmers, we have a huge mission:
@@ -16,19 +15,19 @@ Find the most 3 coolest and interesting web attacks committed in the last years 
 
 ## New for the theoretical part : ( 1 / 2 day)
 Get familiar with the following topics :
-	- Authentication.
-	- Session management.
-	- Session hijacking
-	- HTML injection.
-	- JS injection.
-	- Reflected XSS.
-	- Stored XSS.
-	- DOM-based XSS.
-	- Obfuscation to client code
-	- CSRF
-	- Directory Traversal
-	- Brute-Force Attacks (not only for passwords)
-	- certificates
+- Authentication.
+- Session management.
+- Session hijacking
+- HTML injection.
+- JS injection.
+- Reflected XSS.
+- Stored XSS.
+- DOM-based XSS.
+- Obfuscation to client code
+- CSRF
+- Directory Traversal
+- Brute-Force Attacks (not only for passwords)
+- certificates
 
 ## Practical part : ( 1 / 2 day)
 now we got to the fun part.
