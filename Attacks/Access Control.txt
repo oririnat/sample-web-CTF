@@ -1,0 +1,6 @@
+Get the url http://localhost:5000/chickenyoualmostthereaccounts
+
+This url shows you all the accounts in the website, and only admins have the button that gets you there, but you can get there too..
+
+You need to build a script that tries common urls and prints the urls that returns success.
+Or, maybe, you could just use the script we already gave you that does it..
