@@ -1,5 +1,4 @@
-Sample web CTF, in this CTF you will face with web vulnerabilities from the concepts of : authentication, access control, session management, input handling - XSS &amp; SQL injection and certificates
-
+# web challenges - CTF
 	Today it seems like all the big important systems are on the web.
 	For example Facebook, Google, Amazon, Airport ...
 	As programmers, we have a huge mission:
@@ -23,6 +22,7 @@ Get familiar with the following topics :
 - Reflected XSS.
 - Stored XSS.
 - DOM-based XSS.
+- input handling
 - Obfuscation to client code
 - CSRF
 - Directory Traversal
