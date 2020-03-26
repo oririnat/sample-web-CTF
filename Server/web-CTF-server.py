@@ -16,7 +16,7 @@ def register_to_system():
 		accounts_file.write(str(nextUserId() - 1) + ",0," + str(date.today()) + "," + form_username +"\n")
 		accounts_file.close()
 		return redirect(url_for('login'))
-	return render_template("register.html", money=getUserMoney(), username=getUserUsername(), invalid='Invalid user username')
+	return render_template("register.html", invalid='Invalid user username')
 
 @app.route("/try_login_to_page", methods=["post"])
 def try_login_to_page():
@@ -28,7 +28,7 @@ def try_login_to_page():
 				response.set_cookie('token', value=row[2], max_age=None)
 				session['tokenId'] = row[2]
 				return response
-	return render_template("register.html", money=getUserMoney(), username=getUserUsername(), invalid='Error')
+	return render_template("register.html", invalid='Error')
 
 def isUserLogin():
 	if not request.cookies.get('token'):
@@ -68,14 +68,14 @@ def transfer_money():
 		form_amount = request.form["amount"]
 
 		if(not isUserNameExist(form_sendTo)):
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername(), transferMoneyMessage="There is no such user name")
+			return render_template("index.html", money=getCurrAccount()[1], username=getCurrUsername(), transferMoneyMessage="There is no such user name")
 
 		if(addMoney(session['tokenId'], -1 * int(form_amount))): # fix me
 			addMoney(getIdFromUsername(form_sendTo), form_amount)
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername(), transferMoneyMessage="Money transfered successfully")
+			return render_template("index.html", money=getCurrAccount()[1], username=getCurrUsername(), transferMoneyMessage="Money transfered successfully")
 
 		else:
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername(), transferMoneyMessage="You dont have enough money")
+			return render_template("index.html", money=getCurrAccount()[1], username=getCurrUsername(), transferMoneyMessage="You dont have enough money")
 
 def addMoney(tokenId, amoutToAdd):
 	accountsLines = read_file('data/accounts.csv')
@@ -93,25 +93,26 @@ def read_file(file):
         data = [row for row in csv.reader(f.read().splitlines())]
     return data
 
-def getUserUsername():
-	if not request.cookies.get('token'):
+def getCurrUsername():
+	accountDetails = getCurrAccount()
+	if (accountDetails == 0):
 		return 'error'
 	else:
-		accountsLines = read_file('data/accounts.csv')
-		for i in range(len(accountsLines)):
-			if(accountsLines[i][0] == request.cookies.get('token')):
-				return accountsLines[i][3]
-		return 'error'
+		return accountDetails[3]
 
-def getUserMoney():
-	if not request.cookies.get('token'):
+def getAccountByID(acct_id):
+	accountsLines = read_file('data/accounts.csv')
+	for i in range(len(accountsLines)):
+		if(accountsLines[i][0] == acct_id):
+			return accountsLines[i]
+	return 0
+
+def getCurrAccount():
+	curr_id = request.cookies.get('token')
+	if not curr_id:
 		return 0
 	else:
-		accountsLines = read_file('data/accounts.csv')
-		for i in range(len(accountsLines)):
-			if(accountsLines[i][0] == request.cookies.get('token')):
-				return accountsLines[i][1]
-		return 0
+		return getAccountByID(curr_id)
 
 def getIdFromUsername(username):
 	with open('data/users.csv', 'r') as file:
@@ -119,6 +120,7 @@ def getIdFromUsername(username):
 		for row in reader:
 			if(row[0] == username):
 				return row[2]
+
 def isUserIsAdmin():
 	accountsLines = read_file('data/accounts.csv')
 	for i in range(len(accountsLines)):
@@ -128,7 +130,7 @@ def isUserIsAdmin():
 
 @app.route("/register")
 def register():
-	return render_template("register.html", money=getUserMoney(), username=getUserUsername())
+	return render_template("register.html")
 
 @app.route("/login", methods=["get"])
 def login():
@@ -146,7 +148,7 @@ def logout():
 @app.route("/")
 def home():
 	if(isUserLogin()):
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername())
+			return render_template("index.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
@@ -154,64 +156,76 @@ def home():
 def index():
 	if(isUserLogin()):
 		if(isUserIsAdmin()):
-			return render_template("index.html", money=getUserMoney(), username=getUserUsername(), adminBotton="<p>text</p>")
-		return render_template("index.html", money=getUserMoney(), username=getUserUsername())
+			return render_template("index.html", money=getCurrAccount()[1], username=getCurrUsername(), adminBotton="<p>text</p>")
+		return render_template("index.html",money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
 @app.route("/my_account")
 def my_account():
 	if(isUserLogin()):
-		return render_template("my_account.html", money=getUserMoney(), username=getUserUsername())
+		return render_template("my_account.html", money=getCurrAccount()[1], username=getCurrUsername(), accountDetails=getCurrAccount())
+	else:
+		return render_template("login.html")
+
+@app.route("/chickenyoualmostthereaccounts")
+def accounts():
+	if(isUserLogin()):
+		if isUserIsAdmin():
+			with open('data/accounts.csv', 'r') as file:
+				reader = csv.reader(file)
+				accountsList = list(reader)
+
+		return render_template("accounts.html", money=getCurrAccount()[1], username=getCurrUsername(), accountDetails=getCurrAccount(), len=len(accountsList), accounts=accountsList)
 	else:
 		return render_template("login.html")
 
 @app.route("/blog")
 def blog():
 	if(isUserLogin()):
-		return render_template("blog.html", money=getUserMoney(), username=getUserUsername())
+		return render_template("blog.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
 @app.route("/single-blog")
 def single_blog():
 	if(isUserLogin()):
-		return render_template("single-blog.html", money=getUserMoney(), username=getUserUsername())
+		return render_template("single-blog.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
 @app.route("/project")
 def project():
 	if(isUserLogin()):
-		return render_template("project.html", money=getUserMoney(), username=getUserUsername())
+		return render_template("project.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
 @app.route("/project_details")
 def project_details():
 	if(isUserLogin()):
-		return render_template("project_details.html", money=getUserMoney(), username=getUserUsername())
+		return render_template("project_details.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
 @app.route("/service")
 def service():
 	if(isUserLogin()):
-		return render_template("service.html", money=getUserMoney(), username=getUserUsername())
+		return render_template("service.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
 @app.route("/elements")
 def elements():
 	if(isUserLogin()):
-		return render_template("elements.html", money=getUserMoney(), username=getUserUsername())
+		return render_template("elements.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
 @app.route("/contact")
 def contact():
 	if(isUserLogin()):
-		return render_template("contact.html", money=getUserMoney(), username=getUserUsername())
+		return render_template("contact.html", money=getCurrAccount()[1], username=getCurrUsername())
 	else:
 		return render_template("login.html")
 
