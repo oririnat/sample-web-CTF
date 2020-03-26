@@ -175,8 +175,8 @@ def accounts():
 		with open('data/accounts.csv', 'r') as file:
 			reader = csv.reader(file)
 			accountsList = list(reader)
-
 		return render_template("accounts.html", money=getCurrAccount()[1], username=getCurrUsername(), accountDetails=getCurrAccount(), len=len(accountsList), accounts=accountsList)
+
 	else:
 		return render_template("login.html")
 

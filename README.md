@@ -35,6 +35,19 @@ In the PATH_TO_SERVER_ON_FILESRV, you can find web server serve a simple
 back site.
 We created this site carefully with a lot of vulnerabilities,
 Dig down, search and research for as many vulnerabilities as you can find.
+for some of the exploits, you may use the scripts in the Attckes folder.
+
+After showing us the list of vulnerabilities and exploits,
+Your next important mission is to fix the vulnerabilities.
+
+You may commit changes is the client-side as well as in the server.
+[ ! ] Pay attention, the server-side is written in Flask - python.
+The solution we looking for is conceptual,
+Try not to use Flasks library that makes the solution abstract.
+Instead, implement the concept of the fixes / best practices and with python script.
+
+docker
+
 
 ### List of needed fixes :
 - Hash to passwords
