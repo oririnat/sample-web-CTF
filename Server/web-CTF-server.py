@@ -1,7 +1,9 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for, make_response
 import csv
 import datetime
+from datetime import date
 import jwt
+import hashlib
 from functools import wraps
 
 app = Flask(__name__)
@@ -38,7 +40,7 @@ def register_to_system():
 	form_password = request.form["pass"]
 	if(not isUserNameExist(form_username)):
 		users_file = open('data/users.csv', 'a')
-		users_file.write(form_username + "," + form_password + "," + str(nextUserId()) + "\n")
+		users_file.write(form_username + "," + getSecurePassword(form_password) + "," + str(nextUserId()) + "\n")
 		users_file.close()
 		accounts_file = open('data/accounts.csv', 'a')
 		accounts_file.write(str(nextUserId() - 1) + ",0," + str(date.today()) + "," + form_username +"\n")
@@ -48,10 +50,12 @@ def register_to_system():
 
 @app.route("/try_login_to_page", methods=["post"])
 def try_login_to_page():
+	currUserName = request.form["username"]
+	currPassword = getSecurePassword(request.form["pass"])
 	with open('data/users.csv', 'r') as file:
 		reader = csv.reader(file)
 		for row in reader:
-			if(row[0] == request.form["username"] and row[1] == request.form["pass"]):
+			if(row[0] == currUserName and row[1] == currPassword):
 				token = jwt.encode({'user' : request.form["username"],
 									'id' : row[2],
 				 					'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds = 60 * 60 * 2)},
@@ -60,6 +64,9 @@ def try_login_to_page():
 				response.set_cookie('token', value=token.decode('UTF-8'), max_age=None)
 				return response
 	return render_template("register.html", invalid='Error')
+
+def getSecurePassword(plainPassword):
+	return hashlib.sha256(plainPassword + app.config['SALT_FOR_HASH']).hexdigest()
 
 def nextUserId():
 	lastRow = None
@@ -231,5 +238,6 @@ if __name__ == "__main__":
 	app.secret_key = 'super secret key'
 	app.config['SECRET_KEY'] = 'jwtSecretKey!@#'
 	app.config['SESSION_TYPE'] = 'filesystem'
+	app.config['SALT_FOR_HASH'] = 'thisIsSecretSalt'
 
 	app.run(debug=True)
