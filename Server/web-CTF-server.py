@@ -184,14 +184,6 @@ def my_account():
 @token_requird
 def accounts():
 	if isUserIsAdmin():
-		messages = []
-		messages.append("<table>")
-		messages.append("<th>")
-		messages.append("<td>Account ID</td>")
-		messages.append("<td>Money</td>")
-		messages.append("<td>Joining Date</td>")
-		messages.append("</th>")
-
 		with open('data/accounts.csv', 'r') as file:
 			reader = csv.reader(file)
 			accountsList = list(reader)
