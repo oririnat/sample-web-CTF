@@ -1,12 +1,10 @@
-Ori and Arad:
-push image to correct repo
-change correct repo
 
-You:
------------------------------Until repo is available, you need to build the base docker by yourself as first step--------------------------------------------------
-go to BaseDocker dir -> open cmd ->enter docker build base-ctf .  (I hope you that there is a dot in the end of line)
+--------- Until repo is available, you need to build the base docker by yourself as first step -------------------------------------------------
+$ cd to "BaseDocker"
+$ "docker build -t base-ctf ."
 
 In order to run the project:
-go to sample-web-CTF dir -> enter docker-compose up
+$ cd "sample-web-CTF"
+$ "docker-compose up"
 
 every time you want you want to change something in the code, you need to run the docker-compose up
