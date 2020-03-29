@@ -3,4 +3,4 @@ $ cd "sample-web-CTF"
 $ "docker load -i BaseDocker/base-ctf.tar"
 $ "docker-compose up"
 
-every time you want you want to change something in the code, you need to run only "docker-compose up"
+every time you want to change something in the code, you need to run only "docker-compose up"
