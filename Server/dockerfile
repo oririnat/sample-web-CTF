@@ -1,0 +1,5 @@
+FROM base-ctf:latest
+COPY . /sample-web-ctf
+WORKDIR /sample-web-ctf
+ENTRYPOINT ["python"]
+CMD ["web-CTF-server.py"]
