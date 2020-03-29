@@ -49,7 +49,7 @@ Instead, implement the concept of the fixes / best practices and with python scr
 
 You can find in PATH_TO_DOCKERTODOS_, a full guide of instrection of running the server with preready docker
 
-### List of needed fixes :
+### known exploits :
 - Hash to passwords
 - Add token base authentication
 	- Add JWT
