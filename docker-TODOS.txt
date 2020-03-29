@@ -1,10 +1,6 @@
-
---------- Until repo is available, you need to build the base docker by yourself as first step -------------------------------------------------
-$ cd to "BaseDocker"
-$ "docker build -t base-ctf ."
-
 In order to run the project:
 $ cd "sample-web-CTF"
+$ "docker load -i BaseDocker/base-ctf.tar"
 $ "docker-compose up"
 
-every time you want you want to change something in the code, you need to run the docker-compose up
+every time you want you want to change something in the code, you need to run only "docker-compose up"
