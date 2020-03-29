@@ -5,7 +5,7 @@
 	Making the web more secure and less vulnerable to attacks.
 	For this mission, you will need to have theoretical knowledge as well as practical knowledge about these topics.
 
-You have been selected to be one of the special programmers that fight along with this mission.
+	You have been selected to be one of the special programmers that fight along with this mission.
 
 As a start :
 Find the most 3 coolest and interesting web attacks committed in the last years in the world.
@@ -22,12 +22,12 @@ Get familiar with the following topics :
 - Reflected XSS.
 - Stored XSS.
 - DOM-based XSS.
-- input handling
-- Obfuscation to client code
-- CSRF
-- Directory Traversal
-- Brute-Force Attacks (not only for passwords)
-- certificates
+- input handling.
+- Obfuscation to client code.
+- CSRF.
+- Directory Traversal.
+- Brute-Force Attacks (not only for passwords).
+- certificates.
 
 ## Practical part : ( 1 / 2 day)
 now we got to the fun part.
@@ -35,7 +35,8 @@ In the PATH_TO_SERVER_ON_FILESRV, you can find web server serve a simple
 back site.
 We created this site carefully with a lot of vulnerabilities,
 Dig down, search and research for as many vulnerabilities as you can find.
-for some of the exploits, you may use the scripts in the Attckes folder.
+For some of the exploits, you may find relevent solutions in the Attckes folder 
+(Please don't open this Attckes folder unless you have to get a clue)
 
 After showing us the list of vulnerabilities and exploits,
 Your next important mission is to fix the vulnerabilities.
@@ -46,8 +47,7 @@ The solution we looking for is conceptual,
 Try not to use Flasks library that makes the solution abstract.
 Instead, implement the concept of the fixes / best practices and with python script.
 
-docker
-
+You can find in PATH_TO_DOCKERTODOS_, a full guide of instrection of running the server with preready docker
 
 ### List of needed fixes :
 - Hash to passwords
