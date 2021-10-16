@@ -32,7 +32,7 @@ Get familiar with the following topics :
 ## Practical part : ( 1 / 2 day)
 now we got to the fun part.
 In the PATH_TO_SERVER_ON_FILESRV, you can find web server serve a simple
-back site.
+bank site.
 We created this site carefully with a lot of vulnerabilities,
 Dig down, search and research for as many vulnerabilities as you can find.
 For some of the exploits, you may find relevent solutions in the Attckes folder
